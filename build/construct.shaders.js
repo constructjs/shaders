@@ -2,7 +2,7 @@
  * @name construct.shaders
  * A construct.js extension for shader management
  *
- * Version: 0.1.0 (Sat, 09 Aug 2014 11:56:28 GMT)
+ * Version: 0.1.0 (Sat, 09 Aug 2014 13:09:31 GMT)
  * Homepage: https://github.com/constructjs/shaders
  *
  * @author makesites
@@ -25,6 +25,7 @@
 		// lookup options
 		if( options.indexOf("rift") > -1 ) {
 			construct.config.deps.push("three-oculus");
+			construct.config.deps.push("vrhtml");
 		}
 		// save options
 		Object.extend(construct.options, { shaders: options });
@@ -41,6 +42,9 @@
 		"paths": {
 			"three-oculus" : [
 				"//rawgit.com/constructjs/shaders/master/deps/OculusRiftEffect"
+			],
+			"vrhtml" : [
+				"//rawgit.com/constructjs/shaders/master/deps/vrhtml"
 			]
 		},
 		"shim": {
@@ -68,8 +72,9 @@ function extendMain3D(){
 	APP.Views.Main3D = Main3D.extend({
 
 		options: {
-			worldScale: 1,
-			shaders: construct.options.shaders
+			worldScale: 1, // worldScale 1 means that 1 Units == 1m
+			shaders: construct.options.shaders,
+			hudID: "hud" // the hud of the id
 		},
 
 		events: events,
@@ -78,21 +83,30 @@ function extendMain3D(){
 /*
 		initialize: function( options ){
 
+			// events
+			$(this.el).on("update", _.bind(this._updateShaders, this));
+
 			return Main3D.prototype.initialize.call(this, options);
 		},
 */
 		_start: function( $3d ){
 			// Here is the effect for the Oculus Rift
 			if( _.inArray("rift", this.options.shaders) ){
-				// worldScale 100 means that 1 Units == 1m
 				var rift = new THREE.OculusRiftEffect( $3d.renderer, { worldScale: this.options.worldScale } );
 				rift.setSize( window.innerWidth, window.innerHeight ); // is there a chance this should be contained to the viwe dimensions?
 				this.shaders.set({ rift: rift });
+				vrhtml.startWithoutNPVR( this.options.hudID ); // check if the id exists first?
 			}
+
 			return Main3D.prototype._start.call(this, $3d);
 		},
 
-		update: function( e ){
+		_updateShaders: function( e ){
+			// this isn't working...
+
+		},
+
+		_update: function( e ){
 			// prerequisite #1
 			var shaders = this.shaders.attributes;
 			if( _.isEmpty( shaders ) ) return;
@@ -105,6 +119,8 @@ function extendMain3D(){
 			for( var i in shaders ){
 				shaders[i].render( scene, camera );
 			}
+
+			return Main3D.prototype._update.call(this, e);
 		}
 
 	});
