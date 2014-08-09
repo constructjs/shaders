@@ -7,7 +7,7 @@
 
  For getting orientation information from the Oculus Rift in the browser, I recommend the npvr browser plugin at
  https://github.com/benvanik/vr.js
- 
+
  If you are just interested in rendering VR 3D with top performance, then you should probably skip this and use the existing OculusRiftEffect.js and an OpenGL renderer.
  The reason for this library is if you want to render actual HTML DOM in 3D including support for forms, etc.
 
@@ -198,7 +198,7 @@
 
         vrhtml.initCams();
 
-        vrhtml.initControlsTrackball();
+        //vrhtml.initControlsTrackball();
 
         var scene = "html";
         if (scene == "randomRects") {
@@ -210,7 +210,7 @@
 
         vrhtml.initRenderers();
 
-        vrhtml.initKeyboardShortcuts();
+        //vrhtml.initKeyboardShortcuts();
 
         vrhtml.initEyeSeparation();
 
@@ -221,8 +221,8 @@
 
         requestAnimationFrame(animate);
 
-        controlsLeftTrackBall.update();
-        controlsRightTrackBall.update();
+        //controlsLeftTrackBall.update();
+        //controlsRightTrackBall.update();
 
         //renderer.render( scene, camera );
         rendererLeft.render(sceneLeft, cameraLeft);
@@ -251,11 +251,12 @@
             cameraRight.quaternion.w = vrstate.hmd.rotation[3];
 
         }
+		/*
         if (document.getElementById("controlModeMouse").checked) {
             controlsLeftTrackBall.update();
             controlsRightTrackBall.update();
         }
-
+		*/
         rendererLeft.render(sceneLeft, cameraLeft);
         rendererRight.render(sceneRight, cameraRight);
 
