@@ -1,0 +1,8 @@
+{
+	"name": "construct.shaders",
+	"version": "0.1.0",
+	"main": ["./build/construct.shaders.js"],
+	"dependencies": {
+		"construct" : "*"
+	}
+}
