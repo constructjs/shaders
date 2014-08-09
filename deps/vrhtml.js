@@ -205,7 +205,7 @@
             vrSceneRandomRects.initScenesRandomRects();
         } else if (scene == "html") {
             vrhtml.buildScenesFromHTML(idOfHtml);
-            document.getElementById("htmlModelPrototype").style.display = "none";
+            document.getElementById( idOfHtml ).style.display = "none";
         }
 
         vrhtml.initRenderers();
