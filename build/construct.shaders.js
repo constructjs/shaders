@@ -2,7 +2,7 @@
  * @name construct.shaders
  * A construct.js extension for shader management
  *
- * Version: 0.1.0 (Sat, 09 Aug 2014 13:09:31 GMT)
+ * Version: 0.1.0 (Sun, 10 Aug 2014 06:00:37 GMT)
  * Homepage: https://github.com/constructjs/shaders
  *
  * @author makesites
@@ -73,7 +73,7 @@ function extendMain3D(){
 
 		options: {
 			worldScale: 1, // worldScale 1 means that 1 Units == 1m
-			shaders: construct.options.shaders,
+			shaders: construct.options.shaders || [],
 			hudID: "hud" // the hud of the id
 		},
 
@@ -107,22 +107,21 @@ function extendMain3D(){
 		},
 
 		_update: function( e ){
-			// prerequisite #1
+			// variables
 			var shaders = this.shaders.attributes;
-			if( _.isEmpty( shaders ) ) return;
-			// Oculus Rift effect
+			// get active
 			var scene = this.$3d.active.scene;
 			var camera = this.$3d.active.camera;
-			// prerequisite #2
-			if( !scene || !camera ) return;
-			// loop through shaders
-			for( var i in shaders ){
-				shaders[i].render( scene, camera );
+			// prerequisites
+			if( !_.isEmpty( shaders ) && scene && camera ){
+				// loop through shaders
+				for( var i in shaders ){
+					shaders[i].render( scene, camera );
+				}
 			}
 
 			return Main3D.prototype._update.call(this, e);
 		}
-
 	});
 
 }
