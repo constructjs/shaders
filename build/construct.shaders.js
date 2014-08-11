@@ -2,7 +2,7 @@
  * @name construct.shaders
  * A construct.js extension for shader management
  *
- * Version: 0.1.0 (Sun, 10 Aug 2014 06:00:37 GMT)
+ * Version: 0.1.0 (Mon, 11 Aug 2014 21:40:37 GMT)
  * Homepage: https://github.com/constructjs/shaders
  *
  * @author makesites
@@ -116,7 +116,8 @@ function extendMain3D(){
 			if( !_.isEmpty( shaders ) && scene && camera ){
 				// loop through shaders
 				for( var i in shaders ){
-					shaders[i].render( scene, camera );
+					// update shader (if render method provided)
+					if( shaders[i].render ) shaders[i].render( scene, camera );
 				}
 			}
 
